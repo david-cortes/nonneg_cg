@@ -38,9 +38,9 @@ sudo ldconfig
 
 ## Usage
 
-* Python: see example notebook [here](https://www.github.com/david-cortes/nonneg_cg/example/nncg.ipynb)
+* Python: see example notebook [here](https://github.com/david-cortes/nonneg_cg/blob/master/example/nncg.ipynb)
 * R: see example in the documentation (`help(minimize.nonneg.cg)`)
-* C/C++: see example file [here](https://www.github.com/david-cortes/nonneg_cg/example/c_rosenbrock.c) (- link with `-lnonnegcg`)
+* C/C++: see example file [here](https://github.com/david-cortes/nonneg_cg/blob/master/example/c_rosenbrock.c) (- link with `-lnonnegcg`)
 
 Simple example in Python
 ```python
@@ -57,7 +57,7 @@ The C function can also be used directly from Rcpp (through `R_GetCCallable`) an
 
 ## Documentation
 
-Package has only one function, documentation is available as docstring in Python (`help(nonnegcg.minimize_nncg)`), as regular documentation in R (`help(minimize.nonneg.cg)`), and as comment in the header file in C (link [here](https://github.com/david-cortes/nonneg_cg/include/nonnegcg.h)).
+Package has only one function, documentation is available as docstring in Python (`help(nonnegcg.minimize_nncg)`), as regular documentation in R (`help(minimize.nonneg.cg)`), and as comment in the header file in C (link [here](https://github.com/david-cortes/nonneg_cg/blob/master/include/nonnegcg.h)).
 
 ## References
 * Li, C. (2013). A conjugate gradient type method for the nonnegative constraints optimization problems. Journal of Applied Mathematics, 2013.

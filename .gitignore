@@ -11,10 +11,6 @@ nonnegcg.egg-info/
 build/
 	*.*
 
-src/
-	*.o
-	*.so
-
 *.so
 *.o
 *.out

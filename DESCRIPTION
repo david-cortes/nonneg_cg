@@ -7,7 +7,7 @@ Author: David Cortes
 Maintainer: David Cortes <david.cortes.rivera@gmail.com>
 Description: Minimize a differentiable function subject to all the variables being non-negative (i.e. >= 0),
   using a Conjugate-Gradient algorithm based on the Polak-Rubiere-Polyak formula.
-License: BSD_2_clause
+License: BSD_2_clause + file LICENSE
 Imports: Rcpp (>= 0.12.19)
 LinkingTo: Rcpp
 RoxygenNote: 6.1.1

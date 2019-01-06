@@ -1,0 +1,44 @@
+#cmakedefine HAS_MKL
+#cmakedefine HAS_OPENBLAS
+#cmakedefine HAS_ATLAS
+#cmakedefine HAS_CBLAS
+#cmakedefine BLAS_UNDERSCORES
+#cmakedefine BLAS_NO_UNDERSCORES 
+
+#if defined(HAS_MKL) || defined(HAS_OPENBLAS) || defined(HAS_ATLAS) || defined(HAS_CBLAS)
+	double cblas_ddot(int n, double *x, int incx, double *y, int incy);
+	void cblas_daxpy(int n, double a, double *x, int incx, double *y, int incy);
+	void cblas_dscal(int n, double alpha, double *x, int incx);
+	#ifdef HAS_MKL
+		int mkl_set_num_threads_local(int nthreads);
+	#endif
+	#ifdef HAS_OPENBLAS
+		void openblas_set_num_threads(int nthreads);
+	#endif
+#elif defined(BLAS_UNDERSCORES)
+	double cblas_ddot(int n, double *x, int incx, double *y, int incy)
+	{
+	  return ddot_(&n, x, &incx, y, &incy);
+	}
+	void cblas_daxpy(int n, double a, double *x, int incx, double *y, int incy)
+	{
+	  daxpy_(&n, &a, x, &incx, y, &incy);
+	}
+	void cblas_dscal(int n, double alpha, double *x, int incx)
+	{
+	  dscal_(&n, &alpha, x, &incx);
+	}
+#else
+	double cblas_ddot(int n, double *x, int incx, double *y, int incy)
+	{
+	  return ddot(&n, x, &incx, y, &incy);
+	}
+	void cblas_daxpy(int n, double a, double *x, int incx, double *y, int incy)
+	{
+	  daxpy(&n, &a, x, &incx, y, &incy);
+	}
+	void cblas_dscal(int n, double alpha, double *x, int incx)
+	{
+	  dscal(&n, &alpha, x, &incx);
+	}
+#endif

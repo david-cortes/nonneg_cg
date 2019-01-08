@@ -15,15 +15,15 @@
 #' @param max_ls Maximum number of line search trials per iteration
 #' @param extra_nonneg_tol Ensure extra non-negative tolerance by explicitly setting elements that
 #' are <=0 to zero at each iteration
-#' @param nthreads Number of parallel threads to use
+#' @param nthreads Number of parallel threads to use (ignored if the package was installed from CRAN)
 #' @param verbose Whether to print convergence messages
 #' @param ... Extra parameters to pass to the objective and gradient functions
 #' @export
 #' @examples
 #' fr <- function(x) {   ## Rosenbrock Banana function
-#' x1 <- x[1]
-#' x2 <- x[2]
-#' 100 * (x2 - x1 * x1)^2 + (1 - x1)^2
+#'   x1 <- x[1]
+#'   x2 <- x[2]
+#'   100 * (x2 - x1 * x1)^2 + (1 - x1)^2
 #' }
 #' grr <- function(x) { ## Gradient of 'fr'
 #'   x1 <- x[1]

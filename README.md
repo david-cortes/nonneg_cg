@@ -13,6 +13,15 @@ This algorithm tends to require more function evaluations than others, but fewer
 ## Installation
 
 * Python:
+
+Windows:
+```
+git clone https://www.github.com/david-cortes/nonneg_cg.git
+cd nonneg_cg
+python setup.py install
+```
+
+Linux and Mac
 ```
 pip install nonnegcg
 ```
@@ -21,11 +30,12 @@ pip install nonnegcg
 ```
 devtools::install_github("david-cortes/nonneg_cg")
 ```
+(Can also be installed with `install.packages("nonneg.cg")`, but it won't have multithreading support)
 
 * C/C++:
-
 ```
 git clone https://www.github.com/david-cortes/nonneg_cg.git
+cd nonneg_cg
 mkdir build
 cd build
 cmake ..

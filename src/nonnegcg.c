@@ -38,6 +38,10 @@
 #include <limits.h>
 #ifndef _FOR_R
 	#include <stdio.h> 
+#else
+	#include <R_ext/Print.h>
+	#define printf Rprintf
+	#define fprintf(f, message) REprintf(message)
 #endif
 #ifdef _OPENMP
 	#include <omp.h>
@@ -47,21 +51,9 @@
 	#include "findblas.h"
 #elif defined(_FOR_R)
 	#include <R_ext/BLAS.h>
-	#include <R_ext/Print.h>
-	double cblas_ddot(int n, double *x, int incx, double *y, int incy)
-	{
-	  return ddot_(&n, x, &incx, y, &incy);
-	}
-	void cblas_daxpy(int n, double a, double *x, int incx, double *y, int incy)
-	{
-	  daxpy_(&n, &a, x, &incx, y, &incy);
-	}
-	void cblas_dscal(int n, double alpha, double *x, int incx)
-	{
-	  dscal_(&n, &alpha, x, &incx);
-	}
-	#define printf Rprintf
-	#define fprintf(f, message) REprintf(message)
+	double cblas_ddot(int n, double *x, int incx, double *y, int incy) { return ddot_(&n, x, &incx, y, &incy); }
+	void cblas_daxpy(int n, double a, double *x, int incx, double *y, int incy) { daxpy_(&n, &a, x, &incx, y, &incy); }
+	void cblas_dscal(int n, double alpha, double *x, int incx) { dscal_(&n, &alpha, x, &incx); }
 #else
 	#include "blasfuns.h"
 #endif
@@ -106,6 +98,7 @@
 #define incr_ix_rotation(ix) (  ((ix) == 0)? 1 : 0  )
 #define min(a, b) (  ( (a) <= (b) )? a : b  )
 #define square(x) ( (x) * (x) )
+#define nonneg(x) (x > 0)? x : 0
 
 typedef void fun_eval(double x[], int n, double *f, void *data);
 typedef void grad_eval(double x[], int n, double grad[], void *data);
@@ -283,13 +276,13 @@ int minimize_nonneg_cg(double x[restrict], int n, double *fun_val,
 		/* perform line search */
 		cblas_daxpy(n, max_step, direction_curr, 1, x, 1);
 		direction_norm_sq = cblas_ddot(n, direction_curr, 1, direction_curr, 1);
-		if (extra_nonneg_tol)
-		{
-			#pragma omp parallel for schedule(static, n/nthreads) firstprivate(x, n_szt) num_threads(nthreads)
-			for (size_t_for i = 0; i < n_szt; i++){x[i] = (x[i] <= 0)? 0 : x[i];}
-		}
 		for (ls = 0; ls < max_ls; ls++)
 		{
+			if (extra_nonneg_tol)
+			{
+				#pragma omp parallel for schedule(static, n/nthreads) firstprivate(x, n_szt) num_threads(nthreads)
+				for (size_t_for i = 0; i < n_szt; i++){x[i] = nonneg(x[i]);}
+			}
 			obj_fun(x, n, &new_fun_val, data);
 			if ( !isinf(new_fun_val) && !isnan(new_fun_val) )
 			{
@@ -321,7 +314,15 @@ int minimize_nonneg_cg(double x[restrict], int n, double *fun_val,
 
 	terminate_procedure:
 		if (dealloc_buffer) { free(buffer_arr); }
-		if (revert_x) { cblas_daxpy(n, -max_step * pow(decr_lnsrch, ls), direction_curr, 1, x, 1); }
+		if (revert_x)
+		{
+			cblas_daxpy(n, -max_step * pow(decr_lnsrch, ls), direction_curr, 1, x, 1);
+			if (extra_nonneg_tol)
+			{
+				#pragma omp parallel for schedule(static, n/nthreads) firstprivate(x, n_szt) num_threads(nthreads)
+				for (size_t_for i = 0; i < n_szt; i++){x[i] = nonneg(x[i]);}
+			}
+		}
 		if (verbose)
 		{
 			if (return_value == tol_achieved) 	{ printf("\nTerminated: |<g(x), d(x)>| driven below tol.\n"); }

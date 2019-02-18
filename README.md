@@ -6,7 +6,7 @@ min f(x)
 s.t. x[i] >= 0  i = 1..n
 ```
 
-It uses a modified Polak-Rubiere-Polyak method, which is described in the paper "A conjugate gradient type method for the nonnegative constraints optimization problems" (see reference at the end). Implementation is in C with wrappers for Python and R.
+It uses a modified Polak-Ribiere-Polyak method, which is described in the paper "A conjugate gradient type method for the nonnegative constraints optimization problems" (see reference at the end). Implementation is in C with wrappers for Python and R.
 
 This algorithm tends to require more function evaluations than others, but fewer gradient evaluations. It always produces feasible descent directions.
 

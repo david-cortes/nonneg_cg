@@ -39,11 +39,11 @@ are <=0 to zero at each iteration}
 }
 \description{
 Minimize a differentiable function subject to all the variables being non-negative
-(i.e. >= 0), using a Conjugate-Gradient algorithm based on a modified Polak-Rubiere-Polyak formula (see
+(i.e. >= 0), using a Conjugate-Gradient algorithm based on a modified Polak-Ribiere-Polyak formula (see
 reference at the bottom for details).
 }
 \details{
-The underlyinh C function can also be called directly from Rcpp with `R_GetCCallable` (see example of such usage
+The underlying C function can also be called directly from Rcpp with `R_GetCCallable` (see example of such usage
 in the source code of the 'zoo' package).
 }
 \examples{

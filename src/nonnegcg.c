@@ -1,7 +1,7 @@
 /*	Non-negative conjugate gradient optimizer
 	
 	Minimizes a function subject to non-negativity constraints on all the variables,
-	using a modified Polak-Rubiere-Polyak conjugate gradient method. Implementation
+	using a modified Polak-Ribiere-Polyak conjugate gradient method. Implementation
 	is based on the paper:
 
 	Li, C. (2013). A conjugate gradient type method for the nonnegative constraints optimization problems. Journal of Applied Mathematics, 2013.

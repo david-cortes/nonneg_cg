@@ -22,12 +22,12 @@ class build_ext_subclass( build_ext_with_blas ):
 setup(
 	name  = "nonnegcg",
 	packages = ["nonnegcg"],
-	version = '0.1.1',
+	version = '0.1.1.0',
 	description = 'Conjugate-gradient optimizer subject to non-negativity constraints',
 	author = 'David Cortes',
 	author_email = 'david.cortes.rivera@gmail.com',
 	url = 'https://github.com/david-cortes/nonneg_cg',
-	keywords = ['optimization', 'conjugate gradient', 'polak-rubiere-polyak'],
+	keywords = ['optimization', 'conjugate gradient', 'polak-ribiere-polyak'],
 	install_requires=[
 		'numpy',
 		'scipy',

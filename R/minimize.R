@@ -1,7 +1,7 @@
 #' @title Non-Negative CG Minimizer
 #' 
 #' @description Minimize a differentiable function subject to all the variables being non-negative
-#' (i.e. >= 0), using a Conjugate-Gradient algorithm based on a modified Polak-Rubiere-Polyak formula (see
+#' (i.e. >= 0), using a Conjugate-Gradient algorithm based on a modified Polak-Ribiere-Polyak formula (see
 #' reference at the bottom for details).
 #' 
 #' @param evaluate_function function(x, ...) objective evaluation function

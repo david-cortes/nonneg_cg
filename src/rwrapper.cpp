@@ -12,10 +12,12 @@ extern "C" {
                          double tol, size_t maxnfeval, size_t maxiter, size_t *niter, size_t *nfeval,
                          double decr_lnsrch, double lnsrch_const, size_t max_ls,
                          int extra_nonneg_tol, double *buffer_arr, int nthreads, int verbose);
-  void R_init_nonnegcg(DllInfo *info)
-  {
-    R_RegisterCCallable("nonneg.cg", "minimize_nonneg_cg", (DL_FUNC) &minimize_nonneg_cg);
-  }
+}
+
+// [[Rcpp::init]]
+void R_init_nonnegcg2(DllInfo *info)
+{
+  R_RegisterCCallable("nonneg.cg", "minimize_nonneg_cg", (DL_FUNC) &minimize_nonneg_cg);
 }
 
 typedef struct fholder {

@@ -22,7 +22,7 @@ class build_ext_subclass( build_ext_with_blas ):
 setup(
 	name  = "nonnegcg",
 	packages = ["nonnegcg"],
-	version = '0.1.1.0',
+	version = '0.1.1.1',
 	description = 'Conjugate-gradient optimizer subject to non-negativity constraints',
 	author = 'David Cortes',
 	author_email = 'david.cortes.rivera@gmail.com',
@@ -38,6 +38,6 @@ setup(
 	data_files = [('include', ['include/nonnegcg.h', 'nonnegcg/nonnegcg.pxd'])],
 	include_package_data = True,
 	ext_modules = [
-		Extension("nonnegcg._minimize", sources=["nonnegcg/pywrapper.pyx"], include_dirs=[np.get_include()], define_macros=[("_FOR_PYTON", None)]
+		Extension("nonnegcg._minimize", sources=["nonnegcg/pywrapper.pyx"], include_dirs=[np.get_include()], define_macros=[("_FOR_PYTHON", None)]
 			)]
 	)

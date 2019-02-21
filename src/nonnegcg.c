@@ -47,7 +47,7 @@
 	#include <omp.h>
 #endif
 
-#ifdef _FOR_PYTON
+#ifdef _FOR_PYTHON
 	#include "findblas.h"
 #elif defined(_FOR_R)
 	#include <R_ext/BLAS.h>

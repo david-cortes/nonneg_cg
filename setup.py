@@ -12,7 +12,7 @@ class build_ext_subclass( build_ext_with_blas ):
 		compiler = self.compiler.compiler_type
 		if compiler == 'msvc': # visual studio
 			for e in self.extensions:
-				e.extra_compile_args += ['/O2', '/openmp']
+				e.extra_compile_args += ['/O2']
 		else: # everything else that cares about following standards
 			for e in self.extensions:
 				e.extra_compile_args += ['-O2', '-fopenmp', '-march=native', '-std=c99']
@@ -22,7 +22,7 @@ class build_ext_subclass( build_ext_with_blas ):
 setup(
 	name  = "nonnegcg",
 	packages = ["nonnegcg"],
-	version = '0.1.1.1',
+	version = '0.1.1.2',
 	description = 'Conjugate-gradient optimizer subject to non-negativity constraints',
 	author = 'David Cortes',
 	author_email = 'david.cortes.rivera@gmail.com',

@@ -70,7 +70,7 @@
 /*	OpenMP < 3.0 (e.g. MSVC as of 2019) does not support parallel for's with unsigned iterators,
 	and does not support declaring the iterator type in the loop itself */
 #ifdef _OPENMP
-	#if _OPENMP < 20080101 /* OpenMP < 3.0 */
+	#if _OPENMP < 200801 /* OpenMP < 3.0 */
 		#define size_t_for 
 	#else
 		#define size_t_for size_t
@@ -164,7 +164,7 @@ int minimize_nonneg_cg(double x[restrict], int n, double *fun_val,
 	if ( maxiter <= 0 ) { maxiter = INT_MAX;}
 	if ( maxnfeval <= 0 ) { maxnfeval = INT_MAX;}
 
-	#if defined(_OPENMP) && (_OPENMP < 20080101) /* OpenMP < 3.0 */
+	#if defined(_OPENMP) && (_OPENMP < 200801) /* OpenMP < 3.0 */
 	long i;
 	long n_szt = n;
 	#else

@@ -34,7 +34,7 @@ setup(
 		'cython',
 		'findblas'
 	],
-	cmdclass = {'build_ext': build_ext_with_blas},
+	cmdclass = {'build_ext': build_ext_subclass},
 	data_files = [('include', ['include/nonnegcg.h', 'nonnegcg/nonnegcg.pxd'])],
 	include_package_data = True,
 	ext_modules = [

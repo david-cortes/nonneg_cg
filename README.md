@@ -20,6 +20,9 @@ git clone https://www.github.com/david-cortes/nonneg_cg.git
 cd nonneg_cg
 python setup.py install
 ```
+(Could also be installed from `pip` depending in NumPy version)
+
+**Note: do NOT compile with MINGW in Windows**
 
 Linux and Mac
 ```

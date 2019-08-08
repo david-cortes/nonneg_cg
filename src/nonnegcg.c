@@ -219,7 +219,7 @@ int minimize_nonneg_cg(double x[restrict], int n, double *fun_val,
 		/* determine search direction - this requires 3 passess over 'x' */
 
 		/* first pass: get a capped gradient */
-		#pragma omp parallel for schedule(static, n/nthreads) firstprivate(x, direction_curr, grad_curr) num_threads(nthreads)
+		#pragma omp parallel for schedule(static) firstprivate(x, direction_curr, grad_curr) num_threads(nthreads)
 		for (size_t_for i = 0; i < n_szt; i++)
 		{
 			direction_curr[i] = (x[i] <= 0 && grad_curr[i] >= 0)? 0 : -grad_curr[i];
@@ -232,7 +232,7 @@ int minimize_nonneg_cg(double x[restrict], int n, double *fun_val,
 			theta = 0;
 			beta = 0;
 			#if !defined(_WIN32) && !defined(_WIN64)
-			#pragma omp parallel for schedule(static, n/nthreads) firstprivate(x, direction_prev, grad_curr, grad_prev, n_szt) reduction(+:theta, beta) num_threads(nthreads)
+			#pragma omp parallel for schedule(static) firstprivate(x, direction_prev, grad_curr, grad_prev, n_szt) reduction(+:theta, beta) num_threads(nthreads)
 			#endif
 			for (size_t_for i = 0; i < n_szt; i++)
 			{
@@ -243,7 +243,7 @@ int minimize_nonneg_cg(double x[restrict], int n, double *fun_val,
 			beta /= grad_prev_norm_sq;
 
 			/* third pass: add to direction info on previous direction and gradient differences */
-			#pragma omp parallel for schedule(static, n/nthreads) firstprivate(x, direction_curr, direction_prev, grad_curr, grad_prev, n_szt, theta, beta) num_threads(nthreads)
+			#pragma omp parallel for schedule(static) firstprivate(x, direction_curr, direction_prev, grad_curr, grad_prev, n_szt, theta, beta) num_threads(nthreads)
 			for (size_t_for i = 0; i < n_szt; i++)
 			{
 				direction_curr[i] += ( x[i] <= 0 )? 0 : beta * direction_prev[i] - theta * (grad_curr[i] - grad_prev[i]);
@@ -263,7 +263,7 @@ int minimize_nonneg_cg(double x[restrict], int n, double *fun_val,
 		max_step = 1.0;
 		#if defined(_OPENMP)
 		#if !defined(_WIN32) && !defined(_WIN64)
-		#pragma omp parallel for schedule(static, n/nthreads) firstprivate(x, direction_curr, n_szt) reduction(min: max_step) num_threads(nthreads)
+		#pragma omp parallel for schedule(static) firstprivate(x, direction_curr, n_szt) reduction(min: max_step) num_threads(nthreads)
 		#endif
 		for (size_t_for i = 0; i < n_szt; i++)
 		{
@@ -285,7 +285,7 @@ int minimize_nonneg_cg(double x[restrict], int n, double *fun_val,
 		{
 			if (extra_nonneg_tol)
 			{
-				#pragma omp parallel for schedule(static, n/nthreads) firstprivate(x, n_szt) num_threads(nthreads)
+				#pragma omp parallel for schedule(static) firstprivate(x, n_szt) num_threads(nthreads)
 				for (size_t_for i = 0; i < n_szt; i++){x[i] = nonneg(x[i]);}
 			}
 			obj_fun(x, n, &new_fun_val, data);
@@ -324,7 +324,7 @@ int minimize_nonneg_cg(double x[restrict], int n, double *fun_val,
 			cblas_daxpy(n, -max_step * pow(decr_lnsrch, ls), direction_curr, 1, x, 1);
 			if (extra_nonneg_tol)
 			{
-				#pragma omp parallel for schedule(static, n/nthreads) firstprivate(x, n_szt) num_threads(nthreads)
+				#pragma omp parallel for schedule(static) firstprivate(x, n_szt) num_threads(nthreads)
 				for (size_t_for i = 0; i < n_szt; i++){x[i] = nonneg(x[i]);}
 			}
 		}

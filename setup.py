@@ -6,6 +6,7 @@ except:
 	from distutils.extension import Extension
 import numpy as np, warnings
 from findblas.distutils import build_ext_with_blas
+from sys import platform
 
 ## https://stackoverflow.com/questions/724664/python-distutils-how-to-get-a-compiler-that-is-going-to-be-used
 class build_ext_subclass( build_ext_with_blas ):
@@ -14,23 +15,29 @@ class build_ext_subclass( build_ext_with_blas ):
 		if compiler == 'msvc': # visual studio
 			for e in self.extensions:
 				e.extra_compile_args += ['/O2', '/openmp']
-		elif compiler == 'gcc' or compiler == 'unix':
-			for e in self.extensions:
-				e.extra_compile_args += ['-O2', '-march=native', '-std=c99']
-			msg  = "\n\n\nWarning: parallelization in GCC has been disabled due to a bug in GCC 8.3.0 "
-			msg += "in which for-loop would not increment. Can be enabled manually by modifying the "
-			msg += "'setup.py' file.\n\n\n"
-			warnings.warn(msg)
 		else: # everything else that cares about following standards
 			for e in self.extensions:
 				e.extra_compile_args += ['-O2', '-fopenmp', '-march=native', '-std=c99']
 				e.extra_link_args += ['-fopenmp']
+
+		if platform[:3] == "dar":
+			apple_msg  = "\n\n\nMacOS detected. Package will be built without multi-threading capabilities, "
+			apple_msg += "due to Apple's lack of OpenMP support in default Xcode installs. In order to enable it, "
+			apple_msg += "install the package directly from GitHub: https://www.github.com/david-cortes/nonneg_cg\n"
+			apple_msg += "And modify the setup.py file where this message is shown. "
+			apple_msg += "You'll also need an OpenMP-capable compiler.\n\n\n"
+			warnings.warn(apple_msg)
+			for e in self.extensions:
+				e.extra_compile_args = [arg for arg in extra_compile_args if arg != '-fopenmp']
+				e.extra_link_args	= [arg for arg in extra_link_args	if arg != '-fopenmp']
+
+
 		build_ext_with_blas.build_extensions(self)
 
 setup(
 	name  = "nonnegcg",
 	packages = ["nonnegcg"],
-	version = '0.1.2',
+	version = '0.1.3',
 	description = 'Conjugate-gradient optimizer subject to non-negativity constraints',
 	author = 'David Cortes',
 	author_email = 'david.cortes.rivera@gmail.com',

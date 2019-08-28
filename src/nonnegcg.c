@@ -72,7 +72,7 @@
 /*	OpenMP < 3.0 (e.g. MSVC as of 2019) does not support parallel for's with unsigned iterators,
 	and does not support declaring the iterator type in the loop itself */
 #ifdef _OPENMP
-	#if _OPENMP > 200801 /* OpenMP < 3.0 */
+	#if (_OPENMP > 200801) && !defined(_WIN32) && !defined(_WIN64) /* OpenMP < 3.0 */
 		#define size_t_for size_t
 	#else
 		#define size_t_for 
@@ -165,7 +165,7 @@ int minimize_nonneg_cg(double x[restrict], int n, double *fun_val,
 	if ( maxiter <= 0 ) { maxiter = INT_MAX;}
 	if ( maxnfeval <= 0 ) { maxnfeval = INT_MAX;}
 
-	#if defined(_OPENMP) && (_OPENMP < 200801) /* OpenMP < 3.0 */
+	#if defined(_OPENMP) && ((_OPENMP < 200801) || defined(_WIN32) || defined(_WIN64)) /* OpenMP < 3.0 */
 	long i;
 	long n_szt = n;
 	#else
@@ -192,13 +192,11 @@ int minimize_nonneg_cg(double x[restrict], int n, double *fun_val,
 	double *restrict direction_prev;
 	double *restrict grad_prev;
 
-	// /* set number of BLAS threads */
-	#if defined(mkl_set_num_threads_local)
-		int ignore = mkl_set_num_threads_local(nthreads);
-	#elif defined(openblas_set_num_threads)
+	/* set number of BLAS threads */
+	#if defined(_MKL_H_)
+		mkl_set_num_threads_local(nthreads);
+	#elif defined(CBLAS_H)
 		openblas_set_num_threads(nthreads);
-	#elif defined(_OPENMP)
-		omp_set_num_threads(nthreads);
 	#endif
 
 

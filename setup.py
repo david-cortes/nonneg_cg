@@ -37,7 +37,7 @@ class build_ext_subclass( build_ext_with_blas ):
 setup(
 	name  = "nonnegcg",
 	packages = ["nonnegcg"],
-	version = '0.1.4',
+	version = '0.1.5',
 	description = 'Conjugate-gradient optimizer subject to non-negativity constraints',
 	author = 'David Cortes',
 	author_email = 'david.cortes.rivera@gmail.com',

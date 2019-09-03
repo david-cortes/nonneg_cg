@@ -31,7 +31,7 @@
 #'   c(-400 * x1 * (x2 - x1 * x1) - 2 * (1 - x1),
 #'     200 *      (x2 - x1 * x1))
 #' }
-#' minimize.nonneg.cg(fr, grr, x0 = c(0,2))
+#' minimize.nonneg.cg(fr, grr, x0 = c(0,2), verbose=TRUE, tol=1e-8)
 #' @details The underlying C function can also be called directly from Rcpp with `R_GetCCallable` (see example of such usage
 #' in the source code of the 'zoo' package).
 #' @references Li, C. (2013). A conjugate gradient type method for the nonnegative constraints optimization problems. Journal of Applied Mathematics, 2013.

@@ -14,12 +14,6 @@ extern "C" {
                          int extra_nonneg_tol, double *buffer_arr, int nthreads, int verbose);
 }
 
-// [[Rcpp::init]]
-void R_init_nonnegcg2(DllInfo *info)
-{
-  R_RegisterCCallable("nonneg.cg", "minimize_nonneg_cg", (DL_FUNC) &minimize_nonneg_cg);
-}
-
 typedef struct fholder {
   Rcpp::Function eval_fun;
   Rcpp::Function eval_grad;

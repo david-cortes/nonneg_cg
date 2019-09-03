@@ -2,7 +2,7 @@ Package: nonneg.cg
 Type: Package
 Title: Non-Negative Conjugate-Gradient Minimizer
 Version: 0.1.5
-Date: 2019-09-02
+Date: 2019-09-03
 Author: David Cortes
 Maintainer: David Cortes <david.cortes.rivera@gmail.com>
 Description: Minimize a differentiable function subject to all the variables being non-negative (i.e. >= 0),
